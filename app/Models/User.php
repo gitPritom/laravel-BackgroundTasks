@@ -12,6 +12,11 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    public $incrementing = false;
+    protected $keyType = 'string';
+
+    protected $table = 'users';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +26,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'avatar',
+        'phone',
+        'email_verified_at',
+        'is_admin',
+        'blocked_at',
+        'created_at',
+        'updated_at'
     ];
 
     /**
