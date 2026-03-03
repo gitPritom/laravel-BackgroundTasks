@@ -10,8 +10,6 @@ use Illuminate\Support\Str;
 
 class Taskcontroller extends Controller
 {
-
-
     public function store(Request $request)
     {
         $task = Task::create([
