@@ -31,7 +31,7 @@ class ProcessTasksJob implements ShouldQueue
         ]);
 
         // Simulate heavy task
-        sleep(10);
+        sleep(1);
 
         $this->task->update([
             'status' => 'completed'
