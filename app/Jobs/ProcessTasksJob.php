@@ -26,14 +26,15 @@ class ProcessTasksJob implements ShouldQueue
 
     public function handle()
     {
-        $this->task->update([
+        $task = Task::findOrFail($this->taskId);
+
+        $task->update([
             'status' => 'processing'
         ]);
 
-        // Simulate heavy task
-        sleep(1);
+        sleep(5);
 
-        $this->task->update([
+        $task->update([
             'status' => 'completed'
         ]);
     }
