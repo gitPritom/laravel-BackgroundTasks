@@ -21,9 +21,16 @@ class WelcomeMail extends Mailable
         $this->user = $user;
     }
 
-    public function build()
+    public function envelope(): Envelope
     {
-        return $this->subject('Welcome to Our Application')
-                    ->view('emails.welcome');
+        return new Envelope(subject: 'Welcome to Our Application');
+    }
+
+    public function content(): Content
+    {
+        return new Content(
+            view: 'emails.welcome',
+            with: ['user' => $this->user], 
+        );
     }
 }

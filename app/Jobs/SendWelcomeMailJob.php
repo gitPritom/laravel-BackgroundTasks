@@ -26,6 +26,8 @@ class SendWelcomeMailJob implements ShouldQueue
     {
         $user = User::findOrFail($this->userId);
 
+        info("Hello from Send Welcome mail Job.");
+
         Mail::to($user->email)->send(new WelcomeMail($user));
     }
 }
