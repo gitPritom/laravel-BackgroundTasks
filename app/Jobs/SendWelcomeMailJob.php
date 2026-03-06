@@ -15,19 +15,27 @@ class SendWelcomeMailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $userId;
+    public int $tries = 3;
+    public int $timeout = 60;
 
-    public function __construct($userId)
+    public function __construct(
+        private readonly string $userId 
+    ) {}
+
+    public function handle(): void
     {
-        $this->userId = $userId;
-    }
+        $user = User::find($this->userId);
 
-    public function handle()
-    {
-        $user = User::findOrFail($this->userId);
-
-        info("Hello from Send Welcome mail Job.");
+        if (!$user) {
+            \Log::warning("User {$this->userId} not found");
+            return;
+        }
 
         Mail::to($user->email)->send(new WelcomeMail($user));
+    }
+
+    public function failed(\Throwable $exception): void
+    {
+        \Log::error("Job failed for user {$this->userId}: " . $exception->getMessage());
     }
 }
