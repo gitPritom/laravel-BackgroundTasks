@@ -17,6 +17,15 @@ class User extends Authenticatable
 
     protected $table = 'users';
 
+    protected static function booted(): void
+    {
+        static::creating(function ($user) {
+            if (empty($user->id)) {
+                $user->id = (string) \Str::uuid();
+            }
+        });
+    }
+
     /**
      * The attributes that are mass assignable.
      *
