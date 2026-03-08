@@ -19,7 +19,6 @@ class User extends Authenticatable
 
     protected static function booted(): void
     {
-        
         static::creating(function ($user) {
             if (empty($user->id)) {
                 $user->id = (string) \Str::uuid();
